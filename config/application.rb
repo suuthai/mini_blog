@@ -38,5 +38,10 @@ module MiniBlog
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    if File.exist?("/etc/timezone")
+      config.time_zone = File.read("/etc/timezone").chomp
+      config.active_record.default_timezone = :local      
+    end
   end
 end

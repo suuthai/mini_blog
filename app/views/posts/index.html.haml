@@ -1,0 +1,8 @@
+= turbo_frame_tag "posts" do
+  = render "form", last_post: @posts.last
+  - if @posts.length > 0
+    = render @posts
+    %div{ data: { controller: "scroll-into-view" } }
+  - else
+    #no-posts
+      (投稿がありません)

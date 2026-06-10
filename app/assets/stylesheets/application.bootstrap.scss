@@ -1,2 +1,32 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+turbo-frame {
+  display: contents;
+}
+
+main {
+  padding-block-end: 46px;
+}
+
+.post-content {
+  display: inline-block;  
+  background-color: #eee;
+  position: relative;
+}
+
+.post-content::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 19px;
+  inset-inline-start: 0;
+  border-style: solid;
+  border-block-width: 8px;
+  border-inline-width: 0 8px;
+  border-color: transparent #eee transparent transparent;
+  translate: -100% -50%;
+}
+
+.post-created-at {
+  display: inline-block;
+}
