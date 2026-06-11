@@ -43,5 +43,7 @@ module MiniBlog
       config.time_zone = File.read("/etc/timezone").chomp
       config.active_record.default_timezone = :local      
     end
+
+    config.i18n.default_locale = :ja
   end
 end
