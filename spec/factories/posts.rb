@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :post do
-    content { "MyText" }
+    sequence(:content) { |n| "Post #{n}" }
+    user
   end
 end

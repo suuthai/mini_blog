@@ -1,15 +1,11 @@
-%h2 Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+= render "users/shared/modal", resource: resource, resource_name: resource_name, url: session_path(resource_name), title: "ログイン", submit: "ログインする" do |f|
   .field
-    %p= f.label :email
-    %p= f.email_field :email, autofocus: true, autocomplete: "email"
-  .field
-    %p= f.label :password
-    %p= f.password_field :password, autocomplete: "current-password"
+    = f.label :name, class: "form-label"
+    = f.text_field :name, autofocus: true, required: true, pattern: "[a-zA-Z]+", class: "form-control"
+  .field.mt-2
+    = f.label :password, class: "form-label"
+    = f.password_field :password, autocomplete: "current-password", required: true, class: "form-control"
   - if devise_mapping.rememberable?
-    .field
-      %p= f.check_box :remember_me
-      %p= f.label :remember_me
-  .actions
-    = f.submit "Log in"
-= render "users/shared/links"
+    .field.mt-2
+      = f.check_box :remember_me, class: "form-check-input"
+      = f.label :remember_me, class: "form-check-label"

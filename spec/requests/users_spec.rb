@@ -1,15 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe "Home", type: :request do
-  describe "GET /" do
+RSpec.describe "Users", type: :request do
+  describe "GET /show" do
     it "login needed" do
-      get "/"
+      user = create(:user)
+      get "/users/#{user.id}"
       expect(response).to redirect_to(new_user_session_path) 
     end
 
     it "returns http success" do
-      sign_in create(:user)
-      get "/"
+      user = create(:user)
+      sign_in user
+      get "/users/#{user.id}"
       expect(response).to have_http_status(:success)
     end
   end

@@ -1,3 +1,15 @@
+%header.sticky-top.text-end.bg-white
+  %nav.d-flex.align-items-center.justify-content-end.gap-1.p-1
+    = render "shared/user_button", user_id: current_user.id, user_name: current_user.name
+    = button_to 'ログアウトする', destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary"
+
 %main.bg-white.ps-2.pe-2
   = turbo_frame_tag "posts", src: posts_path do
     .loading-posts 読み込み中です...
+
+#user-modal.modal.fade
+  .modal-dialog.modal-lg.modal-dialog-scrollable
+    .modal-content
+      = turbo_frame_tag "user" do
+        .modal-body
+          読み込み中です...

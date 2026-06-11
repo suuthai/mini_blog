@@ -1,9 +1,4 @@
-%h2 Forgot your password?
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  = render "users/shared/error_messages", resource: resource
+= render "users/shared/modal", resource: resource, resource_name: resource_name, url: password_path(resource_name), title: "パスワード再設定", submit: "再設定の手順をメールで受信する" do |f|
   .field
-    %p= f.label :email
-    %p= f.email_field :email, autofocus: true, autocomplete: "email"
-  .actions
-    = f.submit "Send me password reset instructions"
-= render "users/shared/links"
+    = f.label :email, class: "form-label"
+    = f.email_field :email, autofocus: true, autocomplete: "email", required: true, class: "form-control"

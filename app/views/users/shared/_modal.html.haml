@@ -1,0 +1,17 @@
+.modal{ data: { controller: "show-modal-immediately", bs_backdrop: "static" } }
+  .modal-dialog
+    = form_for(resource, as: resource_name, url: url, html: { class: "modal-content", method: :post } ) do |f|
+      .modal-header
+        .modal-title= title
+      .modal-body
+        - if notice.present?
+          %p= notice
+        - if alert.present?
+          %p= alert
+        = render "users/shared/error_messages", resource: resource
+        = yield f
+      .modal-footer
+        .d-flex.flex-column.gap-2.w-100
+          .actions= f.submit submit, class: "btn btn-primary w-100"
+          .d-flex.flex-row.justify-content-end.gap-2
+            = render "users/shared/links"

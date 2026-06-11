@@ -13,6 +13,7 @@ main {
   display: inline-block;  
   background-color: #eee;
   position: relative;
+  vertical-align: middle;
 }
 
 .post-content::before {
@@ -29,4 +30,12 @@ main {
 
 .post-created-at {
   display: inline-block;
+}
+
+.field_with_errors {
+  display: contents;
+}
+
+.field_with_errors label {
+  color: $danger;
 }
