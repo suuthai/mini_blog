@@ -3,6 +3,13 @@ class PostsController < ApplicationController
   
   def index
     @posts = posts
+    @followed_only = false
+  end
+
+  def followed_only
+    @posts = posts.of_users_followed_by(current_user)
+    @followed_only = true
+    render :index
   end
 
   def create

@@ -1,0 +1,4 @@
+- if user != current_user
+  = button_to followed ? unfollow_user_path(user) : follow_user_path(user), class: "btn btn-outline-secondary", method: :patch, form: { id: "follow-button-form" } do
+    = followed ? "フォロー中" : "フォローする"
+    

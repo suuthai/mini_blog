@@ -1,6 +1,12 @@
 FactoryBot.define do
   factory :user do
-    sequence(:name) { |n| "user" + ('A'..'Z').to_a[n - 1] }
+    sequence(:name) do |n|
+      a_to_z = ('A'..'Z').to_a
+      "user" +
+        ([ "" ] + a_to_z)[(n / (a_to_z. length + 1)).floor] +
+        a_to_z[(n - 1) % a_to_z.length]
+    end
+
     sequence(:email) { |n| "test#{n}@example.com" }
     password { "aaaaaa" }
     password_confirmation { "aaaaaa" }

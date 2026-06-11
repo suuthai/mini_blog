@@ -3,6 +3,7 @@
     .modal-title
       %i.bi.bi-person-fill
       = @user.name
+    = render "follow_button", user: @user, followed: @user.followers.include?(current_user)
     .ms-auto
       %button.btn.btn-close{ type: "button", data: { bs_dismiss: "modal" } }
 

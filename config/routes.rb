@@ -14,7 +14,11 @@ Rails.application.routes.draw do
 
   root "home#index"
 
-  resources :posts, only: [ :index, :create ]
+  resources :posts, only: [ :index, :create ] do
+    collection do
+      get :followed_only
+    end
+  end
 
   devise_for :users, controllers: {
     sessions: "users/sessions",
@@ -22,5 +26,10 @@ Rails.application.routes.draw do
     passwords: "users/passwords"
   }
 
-  resources :users, only: [ :show ]
+  resources :users, only: [ :show ] do
+    member do
+      patch :follow
+      patch :unfollow
+    end
+  end
 end

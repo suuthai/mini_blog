@@ -1,5 +1,6 @@
 = turbo_frame_tag "posts" do
-  = render "form", last_post: @posts.last
+  - if !@followed_only
+    = render "form", last_post: @posts.last
   - if @posts.length > 0
     = render @posts
     %div{ data: { controller: "scroll-into-view" } }

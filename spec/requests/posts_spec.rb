@@ -14,6 +14,27 @@ RSpec.describe "Posts", type: :request do
     end
   end
 
+  describe "GET /posts/followed_only" do
+    it "login needed" do
+      get "/posts/followed_only"
+      expect(response).to redirect_to(new_user_session_path) 
+    end
+
+    it "returns http success" do
+      current_user = create(:user)
+      followed_user = create(:user)
+      not_followed_user = create(:user)
+      current_user.followees << followed_user
+      followed_user_post = create(:post, user: followed_user)
+      not_followed_user_post = create(:post, user: not_followed_user)
+      sign_in current_user
+      get "/posts/followed_only"
+
+      expect(response.body).to include(followed_user_post.content)
+      expect(response.body).not_to include(not_followed_user_post.content)
+    end
+  end
+
   describe "POST /posts" do
     it "login needed" do
       get "/posts"

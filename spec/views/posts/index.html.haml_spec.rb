@@ -19,4 +19,13 @@ RSpec.describe "posts/index.html.haml", type: :view do
       post2.user.name, post2.content, "2026/06/10 04:05"
     )    
   end
+  
+  it "can't post when only posts of followed users are displayed" do
+    assign(:posts, [])
+    assign(:followed_only, true)
+    render
+
+    assert_select "#post-form", false
+  end
+
 end
