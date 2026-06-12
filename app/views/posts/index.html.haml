@@ -1,9 +1,13 @@
 = turbo_frame_tag "posts" do
+  - last_post = nil
+  - @posts.each do |post|
+    = render post
+    - last_post = post
+
   - if !@followed_only
-    = render "form", last_post: @posts.last
-  - if @posts.length > 0
-    = render @posts
-    %div{ data: { controller: "scroll-into-view" } }
+    = render "form", last_post: last_post
+
+  - if last_post.nil?
+    #no-posts (投稿がありません)
   - else
-    #no-posts
-      (投稿がありません)
+    %div{ data: { controller: "scroll-into-view" } }

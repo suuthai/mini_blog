@@ -1,0 +1,1 @@
+= render "shared/user_button", user_id: user.id, user_name: user.name, extra_class: "btn-sm", id: user == current_user ? post_element_id(post, :liker_myself) : ""

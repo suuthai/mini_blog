@@ -83,4 +83,66 @@ RSpec.describe "Posts", type: :request do
     end    
   end
 
+  describe "PATCH /like" do
+    it "give other user's post a like but only once" do
+      user = create(:user)
+      post = create(:post)
+
+      sign_in user
+      expect(post.likers.include?(user)).to be false
+      first_likes_count = post.likes.count
+
+      patch "/posts/#{post.id}/like", as: :turbo_stream
+      expect(post.likers.include?(user)).to be true
+      expect(post.likes.count).to be first_likes_count + 1
+
+      expect { patch "/posts/#{post.id}/like", as: :turbo_stream }.to raise_error ActiveRecord::RecordNotUnique
+      expect(post.likes.count).to be first_likes_count + 1
+    end
+
+    it "can't give my post a like" do
+      user = create(:user)
+      post = create(:post, user: user)
+
+      sign_in user
+      expect(post.likers.include?(user)).to be false
+      first_likes_count = post.likes.count
+
+      patch "/posts/#{post.id}/like", as: :turbo_stream
+      expect(post.likers.include?(user)).to be false
+      expect(post.likes.count).to be first_likes_count
+    end
+  end
+
+  describe "PATCH /unlike" do
+    it "unlike a post but only once" do
+      user = create(:user)
+      post = create(:post)
+
+      sign_in user
+      post.likers << user
+      first_likes_count = post.likes.count
+      expect(post.likers.include?(user)).to be true
+
+      patch "/posts/#{post.id}/unlike", as: :turbo_stream
+      expect(post.likers.include?(user)).to be false
+      expect(post.likes.count).to be first_likes_count - 1
+
+      patch "/posts/#{post.id}/unlike", as: :turbo_stream
+      expect(post.likes.count).to be first_likes_count - 1
+    end
+  end
+
+  describe "GET /likers" do
+    it "list likers" do
+      users = create_list(:user, 3)
+      post = create(:post)
+      post.likers << users
+
+      sign_in users[0]
+      get "/posts/#{post.id}/likers"
+      expect(response.body).to include(users[0].name, users[1].name, users[2].name)
+    end
+  end
+
 end

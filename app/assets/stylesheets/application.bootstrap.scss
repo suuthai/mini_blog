@@ -9,6 +9,22 @@ main {
   padding-block-end: 46px;
 }
 
+.post {
+  position: relative;
+  padding-inline-start: 104px;
+}
+
+.post > .btn.user-button {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: 100px;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .post-content {
   display: inline-block;  
   background-color: #eee;
@@ -38,4 +54,45 @@ main {
 
 .field_with_errors label {
   color: $danger;
+}
+
+.like-button-form {
+  display: inline-block;
+}
+
+.one-or-more-likes .btn.like-button {
+  border-inline-end-width: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.btn.likers-button {
+  display: none;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.one-or-more-likes .btn.likers-button {
+  display: inline-block;
+}
+
+.likers {
+  display: none;
+}
+
+.show-likers .likers {
+  display: contents;
+}
+
+.likers-icon-visible-now,
+.show-likers .likers-icon-hidden-now {
+  display: none;
+}
+
+.show-likers .likers-icon-visible-now {
+  display: inline;
+}
+
+.likers .user-icon {
+  display: none;
 }

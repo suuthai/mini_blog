@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :followers, through: :follower_follows
   has_many :followee_follows, class_name: "Follow", foreign_key: :follower_id
   has_many :followees, through: :followee_follows
+  has_many :likes
+  has_many :liked_posts, through: :likes, source: :post
 
   validates :name, length: { maximum: 20 }, format: { with: /\A[a-zA-Z]+\z/ }
   validates :profile_text, length: { maximum: 200 }

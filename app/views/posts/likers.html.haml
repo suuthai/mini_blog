@@ -1,0 +1,3 @@
+= turbo_frame_tag post_element_id(@post, :likers) do
+  - @post.likers.select(:id, :name).each do |user|
+    = render "liker_button", user: user, post: @post

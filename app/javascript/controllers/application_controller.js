@@ -5,9 +5,13 @@ export default class extends Controller {
   connect() {
   }
 
-  clickPostUserButton(event) {
-    const userButton = event.target.closest(".post-user-button"),
+  clickUserButton(event) {
+    const userButton = event.target.closest(".user-button"),
       userTurboFrame = document.getElementById("user");
     userTurboFrame.src = userButton.dataset.userSrc;
+  }
+
+  toggleLikers(event) {
+    event.target.closest(".like-controls").classList.toggle("show-likers");
   }
 }

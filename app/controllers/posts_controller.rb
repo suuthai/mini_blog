@@ -2,26 +2,34 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @posts = posts
+    @posts = Post.on_the_timeline
     @followed_only = false
   end
 
   def followed_only
-    @posts = posts.of_users_followed_by(current_user)
+    @posts = Post.on_the_timeline.of_users_followed_by(current_user)
     @followed_only = true
     render :index
   end
 
   def create
     current_user.posts.create!(params.require(:post).permit(:content));
-    @new_posts = posts.where("posts.created_at > ?", params[:last_post_created_at])
+    @new_posts = Post.on_the_timeline.where("posts.created_at > ?", params[:last_post_created_at])
   end
 
-  private
+  def like
+    @post = Post.select(:id, :user_id, :likes_count).find(params[:id])
+    @liked = @post.user_id != current_user.id && (@post.likers << current_user)
+    render status: @liked ? :ok : :unprocessable_entity
+  end
 
-  def posts
-    Post.joins(:user)
-      .select("posts.content, posts.created_at, posts.user_id, users.name AS user_name")
-      .order(created_at: :asc)
+  def unlike
+    @post = Post.select(:id, :user_id, :likes_count).find(params[:id])
+    @liked = !(@post.user_id != current_user.id && @post.likers.delete(current_user))
+    render :like, status: !@liked ? :ok : :unprocessable_entity
+  end
+
+  def likers
+    @post = Post.select(:id).find(params[:id])
   end
 end

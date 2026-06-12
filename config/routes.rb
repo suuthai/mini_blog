@@ -15,6 +15,12 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :posts, only: [ :index, :create ] do
+    member do
+      patch :like
+      patch :unlike
+      get :likers
+    end
+
     collection do
       get :followed_only
     end

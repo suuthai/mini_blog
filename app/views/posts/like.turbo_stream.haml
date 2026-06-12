@@ -1,0 +1,8 @@
+= turbo_stream.replace post_element_id(@post, :like_button) do
+  = render "like_button", post: @post, liked: @liked
+
+- if @liked
+  = turbo_stream.append post_element_id(@post, :likers) do
+    = render "liker_button", user: current_user, post: @post
+- else
+  = turbo_stream.remove post_element_id(@post, :liker_myself)
