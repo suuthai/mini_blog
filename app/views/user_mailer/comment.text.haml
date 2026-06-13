@@ -1,0 +1,12 @@
+= "#{@post.user.name} 様"
+\
+投稿に対して、#{@comment.user.name} 様からコメントがありました。
+\
+コメント:
+= @comment.content
+\
+投稿:
+= @post.content
+\
+コメントは以下のURLから確認できます。
+= raw root_url(post: @post.id, comment: @comment.id)

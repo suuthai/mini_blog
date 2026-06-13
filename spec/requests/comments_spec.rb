@@ -30,17 +30,45 @@ RSpec.describe "Comments", type: :request do
 
   describe "POST /create" do
     it "create" do
-      post = create(:post)
-      sign_in create(:user)
+      commentee_user = create(:user, email: "commentee-user@example.com")
+      post = create(:post, user: commentee_user)
+      commenter_user = create(:user, email: "commenter-user@example.com")
+      sign_in commenter_user
+      ActionMailer::Base.deliveries.clear
 
-      post "/posts/#{post.id}/comments/create", as: :turbo_stream, params: {
-        last_comment_created_at: Time.current,
-        comment: {
-          content: "New Comment"
+      perform_enqueued_jobs do
+        post "/posts/#{post.id}/comments", as: :turbo_stream, params: {
+          last_comment_created_at: Time.current,
+          comment: {
+            content: "New Comment"
+          }
         }
-      }
+      end
 
       expect(response.body).to include("New Comment")
+      expect(ActionMailer::Base.deliveries.size).to eq 1
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to include "commentee-user@example.com"
+      expect(mail.to).not_to include "commenter-user@example.com"
+    end
+
+    it "doesn't send e-mail if the post is mine" do
+      commentee_user = create(:user, email: "commentee-user@example.com")
+      post = create(:post, user: commentee_user)
+      sign_in commentee_user
+      ActionMailer::Base.deliveries.clear
+
+      perform_enqueued_jobs do
+        post "/posts/#{post.id}/comments", as: :turbo_stream, params: {
+          last_comment_created_at: Time.current,
+          comment: {
+            content: "comment to my post"
+          }
+        }
+      end
+
+      expect(response).to have_http_status(:success)
+      expect(ActionMailer::Base.deliveries.size).to eq 0
     end
   end
 

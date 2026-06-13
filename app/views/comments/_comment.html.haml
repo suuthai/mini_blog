@@ -1,2 +1,6 @@
-.comment{ data: { controller: comment_iteration.last? ? "scroll-into-view" : "" } }
+.comment{
+  id: "comment_#{comment.id}",
+  data: { controller: comment_iteration.last? ? "scroll-into-view" : "" }
+}
+
   = render "shared/post_comment_common", record: comment

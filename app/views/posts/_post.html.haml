@@ -5,7 +5,7 @@
 
   .post-main.bg-white
     = render "shared/post_comment_common", record: post
-    = button_to post_comments_path(post), method: :get, class: "btn btn-outline-secondary btn-sm", form: { class: "d-inline-block", data: { turbo_frame: post_element_id(post, :comments_turbo_frame), action: "click->application#toggleComments" } } do
+    = button_to post_comments_path(post), method: :get, class: "btn btn-outline-secondary btn-sm", form: { class: "d-inline-block", data: { turbo_frame: post_element_id(post, :comments_turbo_frame), action: "click->home#toggleComments" } } do
       %i.comments-icon-hidden-now.bi.bi-chat-square-text
       %i.comments-icon-visible-now.bi.bi-chat-square-text-fill
     .like-controls.d-inline-block.my-1.ms-1

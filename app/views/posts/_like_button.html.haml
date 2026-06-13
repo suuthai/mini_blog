@@ -2,6 +2,6 @@
   = button_to liked ? unlike_post_path(post) : like_post_path(post), class: "like-button btn btn-outline-secondary btn-sm", method: :patch, disabled: post.user_id == current_user.id, form: { class: "like-button-form" } do
     %i{ class: "bi " + ( liked ? "bi-hand-thumbs-up-fill" : "bi-hand-thumbs-up" ) }
     %span.likes-count= post.likes.size
-  = button_to likers_post_path(post), method: :get, class: "likers-button btn btn-outline-secondary btn-sm", form: { class: "post-details-button-form", data: { turbo_frame: post_element_id(post, :likers), action: "click->application#toggleLikers" } } do
+  = button_to likers_post_path(post), method: :get, class: "likers-button btn btn-outline-secondary btn-sm", form: { class: "post-details-button-form", data: { turbo_frame: post_element_id(post, :likers), action: "click->home#toggleLikers" } } do
     %i.likers-icon-hidden-now.bi.bi-people
     %i.likers-icon-visible-now.bi.bi-people-fill

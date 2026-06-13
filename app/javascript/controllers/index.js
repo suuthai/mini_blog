@@ -7,11 +7,11 @@ import { application } from "./application"
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import ShowModalImmediatelyController from "./show_modal_immediately_controller"
-application.register("show-modal-immediately", ShowModalImmediatelyController)
-
-import ApplicationController from "./application_controller"
-application.register("application", ApplicationController)
+import HomeController from "./home_controller"
+application.register("home", HomeController)
 
 import ScrollIntoViewController from "./scroll_into_view_controller"
 application.register("scroll-into-view", ScrollIntoViewController)
+
+import ShowModalImmediatelyController from "./show_modal_immediately_controller"
+application.register("show-modal-immediately", ShowModalImmediatelyController)

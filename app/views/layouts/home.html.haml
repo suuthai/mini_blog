@@ -1,0 +1,6 @@
+!!!
+%html
+  = render "layouts/head"
+  %body{ data: { controller: "home", now: Time.current.iso8601(6) } }
+    = yield
+    
