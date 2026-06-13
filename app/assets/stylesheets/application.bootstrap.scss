@@ -28,7 +28,7 @@ nav {
 }
 
 .post {
-  scroll-margin-block-start: $control-height * 1.5;
+  scroll-margin-block-start: $control-height;
   scroll-margin-block-end: $control-height * 1.5;
 }
 
@@ -40,7 +40,7 @@ nav {
 
 .comment {
   position: relative;
-  scroll-margin-block-start: $control-height * 1.5;
+  scroll-margin-block-start: $control-height;
   scroll-margin-block-end: $control-height * 2.5;
 }
 
