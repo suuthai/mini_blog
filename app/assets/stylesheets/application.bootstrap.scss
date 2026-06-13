@@ -1,38 +1,84 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
+$spacer-1: map-get($spacers, 1);
+$spacer-2: map-get($spacers, 2);
+$control-height: 48px;
+
 turbo-frame {
   display: contents;
 }
 
-main {
-  padding-block-end: 46px;
+.field_with_errors {
+  display: contents;
+}
+
+.field_with_errors label {
+  color: $danger;
+}
+
+header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+}
+
+nav {
+  height: $control-height;
 }
 
 .post {
-  position: relative;
-  padding-inline-start: 104px;
+  scroll-margin-block-start: $control-height;
+  scroll-margin-block-end: $control-height;
 }
 
-.post > .btn.user-button {
+.post-main {
+  position: sticky;
+  inset-block-start: $control-height;
+  z-index: 1;
+}
+
+.comment {
+  position: relative;
+  scroll-margin-block-start: $control-height;
+  scroll-margin-block-end: $control-height * 2;
+}
+
+.post-main,
+.comment {
+  padding-block: $spacer-1;
+  padding-inline-start: 116px;
+  padding-inline-end: $spacer-2;
+}
+
+.post-main > .btn.user-button,
+.comment > .btn.user-button {
   position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  width: 100px;
   text-align: start;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: 100px;
+  inset-block-start: $spacer-1;
+  inset-inline-start: $spacer-2;
+  margin-block-start: 1px;
 }
 
-.post-content {
+.user-button {
+  --bs-btn-hover-bg: #ddd;
+  --bs-btn-hover-border-color: #ddd;
+  --bs-btn-active-bg: #aaa;
+  --bs-btn-active-border-color: #aaa;
+}
+
+.post-comment-content {
   display: inline-block;  
   background-color: #eee;
   position: relative;
   vertical-align: middle;
 }
 
-.post-content::before {
+.post-comment-content::before {
   content: "";
   position: absolute;
   inset-block-start: 19px;
@@ -44,16 +90,45 @@ main {
   translate: -100% -50%;
 }
 
-.post-created-at {
+.comments .post-comment-content {
+  background-color: $white;
+}
+
+.comments .post-comment-content::before {
+  border-color: transparent $white transparent transparent;
+}
+
+.post-comment-created-at {
   display: inline-block;
+  vertical-align: middle;
 }
 
-.field_with_errors {
-  display: contents;
+.comments-turbo-frame {
+  display: none;
+  background-color: #eee;
 }
 
-.field_with_errors label {
-  color: $danger;
+.show-comments .comments-turbo-frame {
+  display: block;
+}
+
+.comments-icon-hidden-now,
+.show-comments .comments-icon-visible-now {
+  display: inline;
+}
+
+.comments-icon-visible-now,
+.show-comments .comments-icon-hidden-now {
+  display: none;
+}
+
+.comment-form {
+  position: sticky;
+  height: $control-height;
+  inset-block-end: $control-height;
+  background-color: #eee;
+  scroll-margin-block-start: $control-height;
+  scroll-margin-block-end: $control-height;
 }
 
 .like-button-form {
@@ -95,4 +170,12 @@ main {
 
 .likers .user-icon {
   display: none;
+}
+
+.post-form {
+  position: sticky;
+  inset-block-end: 0;  
+  height: $control-height;
+  background-color: $white;
+  z-index: 2;
 }

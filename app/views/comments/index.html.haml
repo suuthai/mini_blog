@@ -1,0 +1,20 @@
+= turbo_frame_tag post_element_id(@post, :comments_turbo_frame) do
+  .comments.ps-3{ id: post_element_id(@post, :comments) }
+    = render @comments
+
+  = form_with model: [@post, Comment.new],
+    class: "comment-form d-flex flex-row gap-1 py-1 px-2",
+    namespace: post_element_id(@post),
+    data: { action: "submit->application#submitComment" } do |form|
+    
+    %input{ 
+      type: "hidden",
+      name: "last_comment_created_at",
+      class: "created-at-input"
+    }
+
+    = form.text_field :content,
+      class: "content-input form-control",
+      required: true
+      
+    = form.submit "コメントする", class: "btn btn-primary"

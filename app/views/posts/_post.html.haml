@@ -1,7 +1,14 @@
-.post.m-1{ id: post_element_id(post) }
-  = render "shared/user_button", user_id: post.user_id, user_name: post.user_name
-  .post-content.p-2.rounded-3= post.content
-  .post-created-at= post.created_at.strftime("%Y/%m/%d %H:%M")
-  .like-controls.d-inline-block.my-1
-    = render "like_button", post: post, liked: current_user.liked_post_ids.include?(post.id)
-    = turbo_frame_tag post_element_id(post, :likers), class: "likers"
+.post{
+  id: post_element_id(post),
+  data: { controller: post_iteration.last? ? "scroll-into-view" : "" }
+}
+
+  .post-main.bg-white
+    = render "shared/post_comment_common", record: post
+    = button_to post_comments_path(post), method: :get, class: "btn btn-outline-secondary btn-sm", form: { class: "d-inline-block", data: { turbo_frame: post_element_id(post, :comments_turbo_frame), action: "click->application#toggleComments" } } do
+      %i.comments-icon-hidden-now.bi.bi-chat-square-text
+      %i.comments-icon-visible-now.bi.bi-chat-square-text-fill
+    .like-controls.d-inline-block.my-1.ms-1
+      = render "like_button", post: post, liked: current_user.liked_post_ids.include?(post.id)
+      = turbo_frame_tag post_element_id(post, :likers), class: "likers"
+  = turbo_frame_tag post_element_id(post, :comments_turbo_frame), class: "comments-turbo-frame"

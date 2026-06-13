@@ -1,0 +1,4 @@
+= render "shared/user_button", user_id: record.user_id, user_name: record.user_name
+.post-comment-content.d-inline-block.p-2.rounded-2= record.content
+.post-comment-created-at.d-inline-block{ data: { created_at: record.created_at.iso8601(6) } }
+  = record.created_at.strftime("%Y/%m/%d %H:%M")

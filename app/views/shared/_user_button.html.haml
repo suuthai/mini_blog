@@ -1,6 +1,6 @@
 /# locals: (user_id:, user_name:, extra_class: "", id: "")
 
-%button.user-button.btn.btn-outline-secondary.text-nowrap{ type: "button", class: extra_class, id: id, data: { bs_toggle: "modal", bs_target: "#user-modal", action: "click->application#clickUserButton", user_src: user_path(user_id) } }
+%button.user-button.btn.text-nowrap{ type: "button", class: extra_class, id: id, data: { bs_toggle: "modal", bs_target: "#user-modal", action: "click->application#clickUserButton", user_src: user_path(user_id) } }
   %i.user-icon.bi.bi-person-fill
   %span= user_name
   

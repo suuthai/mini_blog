@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     collection do
       get :followed_only
     end
+
+    resources :comments, only: [ :index, :create ]
   end
 
   devise_for :users, controllers: {

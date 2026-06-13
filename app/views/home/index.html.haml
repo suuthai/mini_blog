@@ -1,16 +1,16 @@
-%header.sticky-top.text-end.bg-white
-  %nav.d-flex.align-items-center.gap-1.p-1
+%header.text-end.bg-white
+  %nav.d-flex.align-items-center.gap-1.py-1.px-2
     %ul#filter.nav.nav-pills.flex-grow-1.me-auto{ role: "tablist" }
       %li.nav-item
-        = button_to "すべて", posts_path, data: { bs_toggle: "tab" }, class: "nav-link active", form: { data: { turbo_frame: "posts" }}, method: :get
+        = button_to "すべて", posts_path, data: { bs_toggle: "tab" }, class: "nav-link active", form: { data: { turbo_frame: "posts_turbo_frame" }}, method: :get
       %li.nav-item
-        = button_to "フォローのみ", followed_only_posts_path, data: { bs_toggle: "tab" }, class: "nav-link", form: { data: { turbo_frame: "posts" }}, method: :get
+        = button_to "フォローのみ", followed_only_posts_path, data: { bs_toggle: "tab" }, class: "nav-link", form: { data: { turbo_frame: "posts_turbo_frame" }}, method: :get
     = render "shared/user_button", user_id: current_user.id, user_name: current_user.name
     = button_to "ログアウトする", destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary"
 
-%main.bg-white.ps-2.pe-2
-  = turbo_frame_tag "posts", src: posts_path do
-    .loading-posts 読み込み中です...
+%main.bg-white
+  = turbo_frame_tag "posts_turbo_frame", src: posts_path do
+    .loading-posts.py-1.px-2 読み込み中です...
 
 #user-modal.modal.fade
   .modal-dialog.modal-lg.modal-dialog-scrollable

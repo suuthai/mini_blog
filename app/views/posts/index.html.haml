@@ -1,13 +1,11 @@
-= turbo_frame_tag "posts" do
-  - last_post = nil
-  - @posts.each do |post|
-    = render post
-    - last_post = post
+= turbo_frame_tag "posts_turbo_frame" do
+  #posts
+    = render @posts
+    - if @posts.empty?
+      #no-posts.py-1.px-2 (投稿がありません)
 
   - if !@followed_only
-    = render "form", last_post: last_post
-
-  - if last_post.nil?
-    #no-posts (投稿がありません)
-  - else
-    %div{ data: { controller: "scroll-into-view" } }
+    = form_with model: Post.new, class: "post-form d-flex flex-row gap-1 py-1 px-2", data: { action: "submit->application#submitPost" } do |form|
+      %input{ type: "hidden", name: "last_post_created_at", class: "created-at-input" }
+      = form.text_field :content, class: "content-input form-control"
+      = form.submit "投稿する", class: "btn btn-primary"

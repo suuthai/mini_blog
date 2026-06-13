@@ -1,6 +1,4 @@
+= turbo_stream.remove "no_posts"
 = turbo_stream.append "posts" do
   = render @new_posts
-  %div{ data: { controller: "scroll-into-view" } }
-= turbo_stream.remove "no-posts"
-= turbo_stream.replace "post-form" do
-  = render "form", last_post: @new_posts.last
+    

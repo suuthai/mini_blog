@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :followees, through: :followee_follows
   has_many :likes
   has_many :liked_posts, through: :likes, source: :post
+  has_many :comments
 
   validates :name, length: { maximum: 20 }, format: { with: /\A[a-zA-Z]+\z/ }
   validates :profile_text, length: { maximum: 200 }
