@@ -13,7 +13,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    current_user.posts.create!(params.require(:post).permit(:content));
+    current_user.posts.create!(params.require(:post).permit(:content, :image));
     @new_posts = Post.on_the_timeline.where("posts.created_at > ?", params[:last_post_created_at])
   end
 

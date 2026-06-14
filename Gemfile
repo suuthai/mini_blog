@@ -47,6 +47,7 @@ gem "erb2haml"
 gem "devise"
 gem "devise-i18n"
 gem "devise-i18n-views"
+gem "active_storage_validations"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

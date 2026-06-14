@@ -9,7 +9,10 @@
     = button_to "ログアウトする", destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary"
 
 %main.bg-white
-  = turbo_frame_tag "posts_turbo_frame", src: posts_path do
+  = turbo_frame_tag "posts_turbo_frame",
+    src: posts_path,
+    data: { action: "turbo:frame-load->home#postsTurboFrameLoaded" } do
+
     .loading-posts.py-1.px-2 読み込み中です...
 
 #user-modal.modal.fade
@@ -18,3 +21,13 @@
       = turbo_frame_tag "user" do
         .modal-body
           読み込み中です...
+
+#image-modal.modal.fade
+  .modal-dialog.modal-lg.modal-dialog-scrollable
+    .modal-content
+      .modal-header
+        %a#download-image-anchor.btn.btn-outline-secondary
+          %i.bi.bi-download
+        %button.btn.btn-close{ type: "button", data: { bs_dismiss: "modal" } }
+      .modal-body.text-center
+        %img#original-image

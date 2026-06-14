@@ -1,16 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe "Posts", type: :request do
+  let(:image) {
+    image_path = Rails.root.join "spec/fixtures/test_image.png"
+    image = fixture_file_upload image_path, "image/png"
+  }
+
   describe "GET /posts" do
     it "login needed" do
       get "/posts"
       expect(response).to redirect_to(new_user_session_path) 
     end
 
-    it "returns http success" do
-      sign_in create(:user)
+    it "some posts" do
+      user = create(:user, posts: [
+        create(:post, content: "Post 1"),
+        create(:post, content: "Post 2"),
+        create(:post, content: "Post 3")
+      ])
+
+      sign_in user
       get "/posts"
       expect(response).to have_http_status(:success)
+      expect(response.body).to include "Post 1", "Post 2", "Post 3"
+    end
+
+    it "post with image" do
+      user = create(:user, posts: [ create(:post, image: image ) ])
+      sign_in user
+      get "/posts"
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include rails_blob_path(user.posts.last.image, disposition: "attachment")
     end
   end
 
@@ -80,7 +100,22 @@ RSpec.describe "Posts", type: :request do
 
       expect(session_a.response.body).to include("Post from A")
       expect(session_b.response.body).to include("Post from A", "Post from B")
-    end    
+    end
+
+    it "attach image file" do
+      user = create(:user)
+      sign_in user
+
+      post "/posts", as: :turbo_stream, params: {
+        last_post_created_at: Time.current,
+        post: { content: "Post with Image", image: image }
+      }
+
+      expect(response).to have_http_status(:success)
+      uploaded_image = user.posts.last.image
+      expect(uploaded_image).to be_attached
+      expect(uploaded_image.filename.to_s).to eq "test_image.png"
+    end
   end
 
   describe "PATCH /like" do

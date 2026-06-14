@@ -11,4 +11,8 @@
     .like-controls.d-inline-block.my-1.ms-1
       = render "like_button", post: post, liked: current_user.liked_post_ids.include?(post.id)
       = turbo_frame_tag post_element_id(post, :likers), class: "likers"
+    - if post.image.attached?
+      .mt-1
+        %a.thumbnail-anchor{ href: "#", data: { bs_toggle: "modal", bs_target: "#image-modal", image_path: url_for(post.image), image_blob_path: rails_blob_path(post.image, disposition: "attachment"), action: "click->home#clickThumbnail" } }
+          = image_tag post.image.variant(resize_to_limit: [480, 60]), class: "thumbnail-image img-thumbnail"
   = turbo_frame_tag post_element_id(post, :comments_turbo_frame), class: "comments-turbo-frame"

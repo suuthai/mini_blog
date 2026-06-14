@@ -103,6 +103,15 @@ nav {
   vertical-align: middle;
 }
 
+.thumbnail-anchor {
+  display: inline-block;
+}
+
+.thumbnail-image {
+  max-width: 480px;
+  max-height: 60px;  
+}
+
 .comments-turbo-frame {
   display: none;
   background-color: #eee;
@@ -178,4 +187,17 @@ nav {
   height: $control-height;
   background-color: $white;
   z-index: 2;
+}
+
+.file-chosen .choose-image-file-button {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.chosen-image-file {
+  display: none;
+
+  .file-chosen & {
+    display: block;
+  }
 }

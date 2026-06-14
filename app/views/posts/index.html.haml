@@ -7,5 +7,26 @@
   - if !@followed_only
     = form_with model: Post.new, class: "post-form d-flex flex-row gap-1 py-1 px-2", data: { action: "submit->home#submitPost" } do |form|
       %input{ type: "hidden", name: "last_post_created_at", class: "created-at-input" }
-      = form.text_field :content, class: "content-input form-control"
+
+      = form.text_field :content,
+        class: "content-input form-control",
+        required: true,
+        maxlength: 140
+
+      = form.file_field :image,
+        hidden: true,
+        class: "image-file-input",
+        accept: "image/*",
+        data: { action: "change->home#changeImageFile" }
+
+      #image_file_chooser.text-nowrap.d-flex.flex-row.align-items-stretch
+        = form.label :image, class: "choose-image-file-button btn btn-outline-secondary" do
+          %i.bi.bi-image
+        .chosen-image-file.border-top.border-end.border-bottom.border-secondary.rounded-end.px-2{ style: "align-content: center" }
+          %span#chosen_image_file_name filename.png
+
+          %button.btn-close.small{ 
+            type: "button",
+            data: { action: "click->home#unchooseImageFile" }
+          }
       = form.submit "投稿する", class: "btn btn-primary"

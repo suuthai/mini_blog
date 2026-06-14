@@ -3,8 +3,10 @@ class Post < ApplicationRecord
   has_many :likes
   has_many :likers, through: :likes, source: :user
   has_many :comments
-  
-  validates :content, length: { maximum: 140 }  
+  has_one_attached :image
+
+  validates :content, length: { maximum: 140 }
+  validates :image, content_type: /\Aimage\/.*\z/
 
   scope :of_users_followed_by, ->(user) {
     where(user_id: user.followees.select(:id)) 
